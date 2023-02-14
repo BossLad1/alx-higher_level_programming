@@ -1,4 +1,3 @@
-able File  607 lines (499 sloc)  16.8 KB
 #!/usr/bin/python3
 '''Module for Square unit tests.'''
 import unittest
@@ -579,6 +578,7 @@ were given"
         s2.update(**s1_dictionary)
         self.assertEqual(str(s1), str(s2))
         self.assertNotEqual(s1, s2)
+
 
 if __name__ == "__main__":
     unittest.main()
