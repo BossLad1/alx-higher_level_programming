@@ -5,7 +5,7 @@
 -- If the table unique_id already exists, your script should not fail
 
 CREATE TABLE
-IF NOT EXIST `unique_id`(
-`id` INT DEFAULT 1 UNIQUE,
+IF NOT EXISTs `unique_id`(
+`id` INT UNIQUE DEFAULT 1,
 name VARCHAR(256)
 );
