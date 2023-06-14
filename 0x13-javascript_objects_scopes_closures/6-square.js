@@ -1,5 +1,9 @@
 #!/usr/bin/node
-const ParentSquare = require('./5-square');
+/**
+ * Square class that inherits from previous square class
+ */
+const PrevSquare = require('./5-square');
+
 class Square extends PrevSquare {
   charPrint (c) {
     const myChar = c === undefined ? 'X' : c;
