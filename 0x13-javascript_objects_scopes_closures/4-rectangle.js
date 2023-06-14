@@ -2,7 +2,7 @@
 // an instance method called print() that prints the rectangle using the character X
 module.exports = class Rectangle {
   constructor (w, h) {
-    if (w > 0 || h > 0) {
+    if (typeof w === 'number' && w > 0 && typeof h === 'number' && h > 0) {
       this.width = w;
       this.height = h;
     }
@@ -17,8 +17,10 @@ module.exports = class Rectangle {
   }
 
   rotate () {
+    let rottem = 0;
+    rottem = this.width;
     this.width = this.height;
-    this.height = this.width;
+    this.height = rottem;
   }
 
   double () {
