@@ -12,7 +12,7 @@ if __name__ == '__main__':
     """gives ability to have multiple separate working environment"""
     cur = db.cursor()
     cur.execute("SELECT * FROM states")
-
     rows = cur.fetchall()
-    for i in rows:
-        print(i)
+
+    for row in rows:
+        print(row)
