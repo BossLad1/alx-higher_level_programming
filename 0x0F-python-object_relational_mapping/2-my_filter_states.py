@@ -1,28 +1,31 @@
 #!/usr/bin/python3
-"""
-This script that takes in an argument and displays
-all values in the states table of
-hbtn_0e_0_usa where name matches the argument.
-"""
+"""script that lists all states from the database hbtn_0e_0_usa"""
+import MySQLdb
+import sys
 
-import MySQLdb as db
-from sys import argv
 
-"""
-Access to the database and get the states
-from the database.
-"""
-
-if __name__ == '__main__':
-    db_connect = db.connect(host="localhost", port=3306,
-                            user=argv[1], passwd=argv[2], db=argv[3])
-    db_cursor = db_connect.cursor()
-
-    db_cursor.execute(
-        "SELECT * FROM states WHERE name LIKE BINARY '{}' ORDER BY \
-                states.id ASC".format(argv[4]))
-
-    rows_selected = db_cursor.fetchall()
-
-    for row in rows_selected:
+def list_states(username, password, database, uname):
+    """a function to list states"""
+    db = MySQLdb.connect(
+        host="localhost",
+        port=3306,
+        user=username,
+        passwd=password,
+        db=database)
+    cursor = db.cursor()
+    query = "SELECT * FROM states WHERE name LIKE '{}%'".format(uname)
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    for row in rows:
         print(row)
+    cursor.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    username = sys.argv[1]
+    password = sys.argv[2]
+    database = sys.argv[3]
+    uname = sys.argv[4]
+
+    list_states(username, password, database, uname)
