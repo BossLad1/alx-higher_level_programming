@@ -18,6 +18,3 @@ if __name__ == '__main__':
     rows_selected = db_cursor.fetchall()
     for i in rows_selected:
         print(i)
-
-    """clean and close process"""
-    db_cursor.close()
