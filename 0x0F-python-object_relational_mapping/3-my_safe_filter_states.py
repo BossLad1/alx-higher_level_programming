@@ -4,7 +4,7 @@ import MySQLdb
 import sys
 
 
-def list_states(username, password, database, uname):
+def list_states(username, password, database, state_name):
     """a function to list states"""
     db = MySQLdb.connect(
         host="localhost",
@@ -13,9 +13,9 @@ def list_states(username, password, database, uname):
         passwd=password,
         db=database)
     cursor = db.cursor()
-    query = "SELECT * FROM states WHERE name LIKE '%s'"
-    parameters = (uname + '%',)
-    cursor.execute(query, parameters)
+    query = "SELECT * FROM states WHERE name LIKE '%s'\
+            ORDER BY id ASC".format(state_name)
+    cursor.execute(query)
     rows = cursor.fetchall()
     for row in rows:
         print(row)
@@ -27,6 +27,6 @@ if __name__ == "__main__":
     username = sys.argv[1]
     password = sys.argv[2]
     database = sys.argv[3]
-    uname = sys.argv[4]
+    state_name = sys.argv[4]
 
-    list_states(username, password, database, uname)
+    list_states(username, password, database, state_name)
