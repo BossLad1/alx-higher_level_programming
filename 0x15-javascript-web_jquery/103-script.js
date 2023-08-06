@@ -1,3 +1,4 @@
+#!/ur/bin/node
 // JQuery API:
 $(document).ready(function () {
   function getTargetLanguageTxt () {
