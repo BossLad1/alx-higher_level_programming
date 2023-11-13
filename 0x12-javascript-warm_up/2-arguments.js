@@ -8,5 +8,5 @@ if (myArgv === 0) {
 } else if (myArgv === 1) {
   console.log('Argument found');
 } else {
-  console.log('Arguemnt found');
+  console.log('Arguments found');
 }
