@@ -4,7 +4,7 @@
 const myArgv = process.argv[2];
 
 if (isNaN(myArgv)) {
-   console.log('Not a number');
+  console.log('Not a number');
 } else {
-   console.log(myArgv);
+  console.log(myArgv);
 }
