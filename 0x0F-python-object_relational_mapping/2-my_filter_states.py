@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 '''
 module:
-script that lists states with N from the database `hbtn_0e_0_usa`.
+script that takes in an argument and displays all values
+in the states table of hbtn_0e_0_usa
+where name matches the argument.
 MySQLdb
 '''
 
@@ -9,17 +11,18 @@ import MySQLdb
 import sys
 
 
-def list_states(db_user, password, db_name, state_name):
-    '''connect to the MySQL server:
-    retrieve and print the list of states from the database.
+def filter_states(db_user, password, db_name, state_name):
+    '''Connect to the MySQL server
+    retrieve and print the values in the states table
+    where name matches the provided argument.
     '''
     db = MySQLdb.connect(host='localhost', port=3306, user=db_user,
                          passwd=password, db=db_name)
     cursor = db.cursor()
-
-    # retrieve states starting with 'N'
+    # create the SQL query object with user input
+    # Retrieve and print the matching states
     cursor.execute("SELECT * FROM states WHERE name LIKE BINARY '{}'"
-                   "ORDER BY states.id ASC".format(state_name))
+                   "ORDER BY id ASC".format(state_name))
     states = cursor.fetchall()
     for state in states:
         print(state)
@@ -29,10 +32,10 @@ def list_states(db_user, password, db_name, state_name):
 
 
 if __name__ == '__main__':
-    # get connection variables from command-line arguments:
+    # get connection variables and state name from command-line arguments
     db_user = sys.argv[1]
     password = sys.argv[2]
     db_name = sys.argv[3]
     state_name = sys.argv[4]
 
-    list_states(db_user, password, db_name, state_name)
+    filter_states(db_user, password, db_name, state_name)

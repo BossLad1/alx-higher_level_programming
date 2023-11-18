@@ -1,17 +1,20 @@
 #!/usr/bin/python3
 '''
 module:
-script that lists states with N from the database `hbtn_0e_0_usa`.
-MySQLdb
+script that takes in an argument and displays all values
+in the states table of hbtn_0e_0_usa
+where name matches the argument.
+MySQLdb (safe from MySQL injection)
 '''
 
 import MySQLdb
 import sys
 
 
-def list_states(db_user, password, db_name, state_name):
-    '''connect to the MySQL server:
-    retrieve and print the list of states from the database.
+def safe_filter(db_user, password, db_name, state_name):
+    '''connect to the MySQL server,
+    retrieve and print the values in the states table
+    where name matches the provided argument.
     '''
     db = MySQLdb.connect(host='localhost', port=3306, user=db_user,
                          passwd=password, db=db_name)
@@ -19,7 +22,9 @@ def list_states(db_user, password, db_name, state_name):
 
     # SQL - injection safe expression
     query = "SELECT * FROM states WHERE name = %s ORDER BY id ASC"
-    cursor.execute(query, (state_name))
+    cursor.execute(query, (state_name,))
+
+    # retrieve and print the matching states
     states = cursor.fetchall()
     for state in states:
         print(state)
@@ -29,10 +34,10 @@ def list_states(db_user, password, db_name, state_name):
 
 
 if __name__ == '__main__':
-    # get connection variables from command-line arguments:
+    # get connection variables and state name from command-line arguments
     db_user = sys.argv[1]
     password = sys.argv[2]
     db_name = sys.argv[3]
     state_name = sys.argv[4]
 
-    list_states(db_user, password, db_name, state_name)
+    safe_filter(db_user, password, db_name, state_name)
