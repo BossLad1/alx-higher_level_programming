@@ -3,9 +3,9 @@
 import MySQLdb
 from sys import argv
 
-if __name__ == '__main__':
-    db_connect = MYSQLdb.connect(host="localhost", user=argv[1], port=3306,
-                                 passwd=argv[2], db=argv[3])
+def list_states (db_user, password, db_name):
+    db_connect = MYSQLdb.connect(host="localhost", user=db_user, port=3306,
+                                 passwd=passord, db=db_name)
 
     db_cursor = db_connect.cursor()
 
@@ -16,3 +16,10 @@ if __name__ == '__main__':
 
     cursor.close()
     db.close()
+
+if __name__ =='__main__':
+    db_user = sys.argv[1]
+    password = sys.argv[2]
+    db_name = sys.argv[3]
+
+    list_states(db_user, password, db_name)
