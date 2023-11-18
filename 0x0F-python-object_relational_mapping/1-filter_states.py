@@ -23,4 +23,5 @@ if __name__ == '__main__':
     rows_selected = db_cursor.fetchall()
 
     for row in rows_selected:
-        print(row)
+        if state[1][0] == 'N':
+            print(row)
