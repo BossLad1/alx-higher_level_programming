@@ -1,27 +1,38 @@
 #!/usr/bin/python3
-"""
-script that lists all states with a name 
-starting with N (upper N) from the database hbtn_0e_0_usa.
-"""
+'''
+module:
+script that lists states with N from the database `hbtn_0e_0_usa`.
+MySQLdb
+'''
 
-import MySQLdb as db
-from sys import argv
+import MySQLdb
+import sys
 
-"""
-connect to the MySQL server:
-retrieve and print the list of states from the database.
-"""
+
+def list_states(db_user, password, db_name):
+    '''connect to the MySQL server:
+    retrieve and print the list of states from the database.
+    '''
+    db = MySQLdb.connect(host='localhost', port=3306, user=db_user,
+                         passwd=password, db=db_name)
+    cursor = db.cursor()
+
+    # retrieve states starting with 'N'
+    cursor.execute("SELECT * FROM states WHERE name LIKE 'N%'"
+                   "ORDER BY states.id ASC")
+    states = cursor.fetchall()
+    for state in states:
+        if state[1][0] == 'N':
+            print(state)
+
+    cursor.close()
+    db.close()
+
 
 if __name__ == '__main__':
-    db_connect = db.connect(host="localhost", port=3306,
-                            user=argv[1], passwd=argv[2], db=argv[3])
-    db_cursor = db_connect.cursor()
+    # get connection variables from command-line arguments:
+    db_user = sys.argv[1]
+    password = sys.argv[2]
+    db_name = sys.argv[3]
 
-    db_cursor.execute(
-        "SELECT * FROM states WHERE name LIKE BINARY 'N%' \
-                ORDER BY states.id ASC")
-
-    rows_selected = db_cursor.fetchall()
-
-    for row in rows_selected:
-        print(row)
+    list_states(db_user, password, db_name)
