@@ -1,29 +1,27 @@
 #!/usr/bin/python3
 """
-Script lists all states from the
-database `hbtn_0e_0_usa`.
+script that lists all states with a name 
+starting with N (upper N) from the database hbtn_0e_0_usa.
 """
 
-import MySQLdb
+import MySQLdb as db
 from sys import argv
 
 """
-    Access to the database and get the states
-    from the database.
-    """
+connect to the MySQL server:
+retrieve and print the list of states from the database.
+"""
 
 if __name__ == '__main__':
-
-    db_connect = MySQLdb.connect(
-        host="localhost", user=argv[1], port=3306, passwd=argv[2], db=argv[3])
-
+    db_connect = db.connect(host="localhost", port=3306,
+                            user=argv[1], passwd=argv[2], db=argv[3])
     db_cursor = db_connect.cursor()
 
-    db_cursor.execute("SELECT * FROM states WHERE name LIKE '%N'"
-                      "ORDER BY states.id ASC")
+    db_cursor.execute(
+        "SELECT * FROM states WHERE name LIKE BINARY 'N%' \
+                ORDER BY states.id ASC")
 
     rows_selected = db_cursor.fetchall()
 
     for row in rows_selected:
-        if row[1][0] == 'N':
-            print(row)
+        print(row)
